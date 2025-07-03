@@ -1,9 +1,30 @@
 # Reads the pdf file, extract the data from it
 from line_utils import get_page_line_counts
+import requests
 import pdfplumber
 import re
+import os
 
-pdf_path = "2025-05.pdf"
+#Download the winning numbers from May 2025
+page_url = "https://www.aade.gr/sites/default/files/2025-06/1.lottery_a1004_44.pdf"
+
+# Main download folder
+base_folder = "winning_numbers"
+os.makedirs(base_folder, exist_ok=True)
+
+# File name and full path
+file_name = os.path.basename(page_url)
+pdf_path = os.path.join(base_folder, file_name)
+
+# Download and save the PDF
+response = requests.get(page_url)
+if response.status_code == 200:
+    with open(pdf_path, "wb") as f:
+        f.write(response.content)
+    print(f"PDF saved at: {pdf_path}")
+else:
+    print("Failed to download the PDF")
+
 lottery_numbers = []
 
 # Define pattern: 1–3 parts; parts 2/3 must be exactly 4 digits
