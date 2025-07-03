@@ -32,8 +32,3 @@ print("💰 Your chances of winning by prize tier:\n")
 for prize, winners in prize_tiers.items():
     chance = (winners * my_tickets / total_tickets) * 100
     print(f"  • {prize:>7}: {chance:.6f}% chance")
-
-# Optional: Estimate total expected return
-expected_value = sum((float(prize.replace("€", "").replace(",", "")) * winners * my_tickets / total_tickets)
-                     for prize, winners in prize_tiers.items())
-print(f"\n📈 Estimated expected return: {expected_value:,.2f}€ (statistical average)")
